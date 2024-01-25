@@ -16,24 +16,32 @@ fluidPage(
     titlePanel("Conway's Game of Life"),
 
     # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("habitat_size",
-                        "Habitat Size",
-                        min = 10,
-                        max = 50,
-                        value = 25),
-            sliderInput("iterations",
-                        "Number of Generations",
-                        min = 1,
-                        max = 150,
-                        value = 50),
-            actionButton("run", "Run!"),
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-            plotlyOutput("plot1")
-        )
+    fluidRow(
+        column(4,
+               wellPanel(
+                           sliderInput("habitat_size",
+                                       "Habitat Size",
+                                       min = 10,
+                                       max = 50,
+                                       value = 25),
+                           sliderInput("iterations",
+                                       "Number of Generations",
+                                       min = 1,
+                                       max = 150,
+                                       value = 50),
+                           sliderInput("prob_life",
+                                       "Probability of starting life",
+                                       min = 0.05,
+                                       max = 0.5,
+                                       value = 0.15),
+                           actionButton("run", "Run!"),
+                        )
+               ),
+        splitLayout(cellWidths = c("50%", "50%"), plotlyOutput("plot1"), plotlyOutput("plot2")),
+               
+        
+               
+        
     )
+    
 )

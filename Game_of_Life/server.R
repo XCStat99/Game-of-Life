@@ -12,28 +12,28 @@ library(gganimate)
 library(reshape2)
 library(tidyverse)
 library(plotly)
+library(htmlwidgets)
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
-    
+
     n <- eventReactive(input$run, {
      input$habitat_size 
       })
     frame_tot <- eventReactive(input$run, {
         input$iterations
     })
-    
-
-    output$plot1 <- renderPlotly({
-        
-        
+    prob_life <-  eventReactive(input$run, {
+        input$prob_life
+    })
+    observe({
         #reassign variables to save on typing
         #define 'habitat' size
         n <- n()
         #define evolution iterations
         frame_tot <- frame_tot()
         #initate starting conditions in a matrix, 
-        M<-matrix(rbinom(n^2,1,0.1),nrow=n)
+        M<-matrix(rbinom(n^2,1,prob_life()),nrow=n)
         
         #Alive and dead cells are assigned 1 or 0:
         #Alive = 1
@@ -41,6 +41,8 @@ function(input, output, session) {
         
         #create 3D matrix to store animation frames
         M_all<-array(M, dim = c(dim(M),frame_tot))
+        #create data frame to store population stats
+        M_pop <- data.frame(Rel_pop = double(), Iteration = integer())
         
         for (i in 1:frame_tot){
             # make shifted copies of the original M matrix
@@ -67,6 +69,14 @@ function(input, output, session) {
             #populate 3D matrix for animation
             M_all[,,i] <- M_temp
             M <- M_temp
+            #check relative population  and store to vector
+            rel_pop <- sum(M_temp)*100/(n^2)
+            M_pop[nrow(M_pop)+1,] <- c(rel_pop,i)
+            #check if mass extinction has occured
+            if(rel_pop ==0){
+                M_all <- M_all[,,1:i]
+                break
+            }
             
         }
         
@@ -74,25 +84,34 @@ function(input, output, session) {
         #melt 3D matrix to dataframe to allow plotting
         M_all_df <-  melt(M_all)
         colnames(M_all_df) <- c('X', 'Y', 'Iteration', 'Z')
-        
-        #set axis attributes
-        ax_att <-  list(title="", 
-                        ticks ="",
-                        showticklabels=FALSE,
-                        zeroline =FALSE, 
-                        showline =FALSE,
-                        showgrid=FALSE, 
-                        showspikes = FALSE)
-        
-        
-        #plot using heatmap
-        fig <- M_all_df %>% 
-            plot_ly(x =~X, y=~Y, z = ~Z, frame = ~Iteration, type = "heatmap", showscale = FALSE) %>%
-            layout(showlegend = FALSE, xaxis =ax_att, yaxis=ax_att) %>%
-            style(hoverinfo = 'none')
-        
-        fig
+        #accumulate data to allow trace scatter to be created
+        M_pop <- lapply(seq_along(M_pop$Iteration), function(x) {
+            cbind(M_pop[M_pop$Iteration %in% M_pop$Iteration[seq(1, x)], ], frame = M_pop$Iteration[[x]])})
+        M_pop <- bind_rows(M_pop)
 
+            output$plot1 <- renderPlotly({
+                #set axis attributes
+                ax_att <-  list(title="", 
+                                ticks ="",
+                                showticklabels=FALSE,
+                                zeroline =FALSE, 
+                                showline =FALSE,
+                                showgrid=FALSE, 
+                                showspikes = FALSE)
+                #plot using heatmap
+                fig1 <- M_all_df %>% 
+                    plot_ly(x =~X, y=~Y, z = ~Z, frame = ~Iteration, type = "heatmap", showscale = FALSE) %>%
+                    layout(showlegend = FALSE, xaxis =ax_att, yaxis=ax_att) %>%
+                    style(hoverinfo = 'none') %>% onRender("function(el,x) {Plotly.animate(el);}")
+                fig1
+        
+            })
+            output$plot2 <- renderPlotly({
+                fig2 <- M_pop %>% plot_ly(x=~Iteration, y=~Rel_pop,frame = ~frame, type = 'scatter', mode = 'lines', line = list(simplyfy = F))  %>%
+                    layout(title = "Relative Population / %", yaxis = list(title = "Relative Population / %"), xaxis = list(title = "Life Cycle Iteration")) %>%
+                    onRender("function(el,x) {Plotly.animate(el);}")
+                fig2
+            })
     })
 
 }
