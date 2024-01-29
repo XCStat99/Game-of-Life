@@ -101,15 +101,16 @@ function(input, output, session) {
                 #plot using heatmap
                 fig1 <- M_all_df %>% 
                     plot_ly(x =~X, y=~Y, z = ~Z, frame = ~Iteration, type = "heatmap", showscale = FALSE) %>%
-                    layout(showlegend = FALSE, xaxis =ax_att, yaxis=ax_att) %>%
-                    style(hoverinfo = 'none') %>% onRender("function(el,x) {Plotly.animate(el);}")
+                    layout(showlegend = FALSE, xaxis =ax_att, yaxis=ax_att, paper_bgcolor = "dimgray") %>%
+                    style(hoverinfo = 'none') %>% onRender("function(el,x) {Plotly.animate(el);}") %>% animation_slider(
+                        currentvalue = list(prefix = "Iteration ", color = "white"), font = list(color="white")) %>% animation_button(bgcolor = "black", font = list(color="white"))
                 fig1
         
             })
             output$plot2 <- renderPlotly({
                 fig2 <- M_pop %>% plot_ly(x=~Iteration, y=~Rel_pop,frame = ~frame, type = 'scatter', mode = 'lines', line = list(simplyfy = F))  %>%
                     layout(title = "Relative Population / %", yaxis = list(title = "Relative Population / %"), xaxis = list(title = "Life Cycle Iteration")) %>%
-                    onRender("function(el,x) {Plotly.animate(el);}")
+                    onRender("function(el,x) {Plotly.animate(el);}") 
                 fig2
             })
     })
