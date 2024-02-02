@@ -8,17 +8,30 @@
 #
 
 library(shiny)
+library(shinyWidgets)
+library(gganimate)
+library(reshape2)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+
 
 # Define UI for application that draws a histogram
 fluidPage(
-    
+    setBackgroundColor(
+        color = "dimgray",
+        shinydashboard = FALSE
+    ),
      # Application title
-    titlePanel("Conway's Game of Life"),
+    titlePanel(h1("Conway's Game of Life!",
+                  style= "color:white")),
+    
 
     # Sidebar with a slider input for number of bins
     fluidRow(
         column(4,
-               wellPanel(
+               wellPanel(style = "background: gray; color:white",
+                         
                            sliderInput("habitat_size",
                                        "Habitat Size",
                                        min = 10,
@@ -34,14 +47,11 @@ fluidPage(
                                        min = 0.05,
                                        max = 0.5,
                                        value = 0.15),
-                           actionButton("run", "Run!"),
+                           actionButton("run", "Start", icon = icon("bolt"), 
+                                        style="background: black; color: white"),
                         )
                ),
-        splitLayout(cellWidths = c("50%", "50%"), plotlyOutput("plot1"), plotlyOutput("plot2")),
-               
-        
-               
-        
-    )
+            ),
+    fluidRow(column(4, plotlyOutput("plot1")), column(4, plotlyOutput("plot2"))),
     
 )

@@ -104,14 +104,20 @@ function(input, output, session) {
                     layout(showlegend = FALSE, xaxis =ax_att, yaxis=ax_att, paper_bgcolor = "dimgray") %>%
                     style(hoverinfo = 'none') %>% onRender("function(el,x) {Plotly.animate(el);}") %>% animation_slider(
                         currentvalue = list(prefix = "Iteration ", color = "white"), font = list(color="white")) %>% animation_button(bgcolor = "black", font = list(color="white"))
-                fig1
+                
+                fig2 <- M_pop %>% plot_ly(x=~Iteration, y=~Rel_pop,frame = ~frame, type = 'scatter', mode = 'lines', line = list(simplyfy = F))  %>%
+                    layout(title = "Relative Population / %", yaxis = list(title = "Relative Population / %"), xaxis = list(title = "Life Cycle Iteration")) %>%
+                    onRender("function(el,x) {Plotly.animate(el);}") 
+                fig <- subplot(fig1, fig2) %>% 
+                    layout(title = 'Side By Side Subplots') %>% animation_slider(
+                        currentvalue = list(prefix = "Iteration ", color = "white"), font = list(color="white"))
+                fig
         
             })
             output$plot2 <- renderPlotly({
                 fig2 <- M_pop %>% plot_ly(x=~Iteration, y=~Rel_pop,frame = ~frame, type = 'scatter', mode = 'lines', line = list(simplyfy = F))  %>%
                     layout(title = "Relative Population / %", yaxis = list(title = "Relative Population / %"), xaxis = list(title = "Life Cycle Iteration")) %>%
-                    onRender("function(el,x) {Plotly.animate(el);}") 
-                fig2
+                    onRender("function(el,x) {Plotly.animate(el);}") %>% animation_opts(redraw = TRUE)
             })
     })
 
