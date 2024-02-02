@@ -16,22 +16,18 @@ library(plotly)
 library(htmlwidgets)
 
 
-# Define UI for application that draws a histogram
 fluidPage(
     setBackgroundColor(
         color = "dimgray",
         shinydashboard = FALSE
     ),
      # Application title
-    titlePanel(h1("Conway's Game of Life!",
+    titlePanel(h1("Conway's Game of Life", align ="center",
                   style= "color:white")),
     
 
     # Sidebar with a slider input for number of bins
-    fluidRow(
-        column(4,
-               wellPanel(style = "background: gray; color:white",
-                         
+    fluidRow(column(3, wellPanel(style = "background: gray; color:white",
                            sliderInput("habitat_size",
                                        "Habitat Size",
                                        min = 10,
@@ -40,18 +36,25 @@ fluidPage(
                            sliderInput("iterations",
                                        "Number of Generations",
                                        min = 1,
-                                       max = 150,
+                                       max = 100,
                                        value = 50),
                            sliderInput("prob_life",
                                        "Probability of starting life",
                                        min = 0.05,
                                        max = 0.5,
-                                       value = 0.15),
+                                       value = 0.15))),
+            column(3, wellPanel(style = "background: gray; color:white",
+                            numericInput("B_R", "Rebirth by reproduction if neighbours are exactly equal to:", value = 3, min = 0, max = 8),
+                            numericInput("D_U", "Death by under population if neighbours are less than:", value = 2, min = 0, max = 8),
+                            numericInput("D_O", "Death by overpopulation if neighbours are greater than:", value = 3, min = 0, max = 8),
                            actionButton("run", "Start", icon = icon("bolt"), 
-                                        style="background: black; color: white"),
-                        )
-               ),
-            ),
-    fluidRow(column(4, plotlyOutput("plot1")), column(4, plotlyOutput("plot2"))),
+                                        style="background: black; color: white")
+                        ))),
+            
+    fluidRow(column(4, wellPanel(style = "background: gray; color:white",
+                                 plotlyOutput("plot1"))), 
+             column(4, wellPanel(style = "background: gray; color:white",
+                                 plotlyOutput("plot2"))))
+   
     
 )
