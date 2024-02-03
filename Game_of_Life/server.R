@@ -41,7 +41,7 @@ function(input, output, session) {
         #number of rows given by n
         n <- n()
         #number of columns is a fixed ratio of the rows, this makes plotting easier
-        m <- n()
+        m <- as.integer(1.25*n())
         #define evolution iterations
         frame_tot <- frame_tot()
         #initate starting conditions in a matrix, 
@@ -54,8 +54,9 @@ function(input, output, session) {
         #create 3D matrix to store animation frames
         M_all<-array(M, dim = c(dim(M),frame_tot))
         #create data frame to store population stats
-        M_pop <- data.frame(Rel_pop = double(), Iteration = integer())
-        
+        M_pop <- data.frame(Rel_pop = double(), Iteration = integer(),Colour = character())
+        #calculate initial population
+        M_pop_t0 <- sum(M)
         for (i in 1:frame_tot){
             # make shifted copies of the original M matrix
             M1 = cbind( rep(0,n) , M[,-m] )
@@ -72,6 +73,8 @@ function(input, output, session) {
             
             # apply the rules of Conway's Game of Life
             M_temp <- M
+            
+            
             # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
             M_temp[M==0 & M_tot==B_R()] <- 1
             # Any live cell with fewer than two live neighbours dies, as if by underpopulation.
@@ -80,15 +83,25 @@ function(input, output, session) {
             M_temp[M==1 & M_tot>D_O()] <- 0
             #populate 3D matrix for animation
             M_all[,,i] <- M_temp
+            
+            #if (i==1){
+            #    M_pop[nrow(M_pop)+1,] <- c(0,i,"white")
+            #}
+            #check relative population to starting population and store to vector
+            rel_pop <- (sum(M_temp) - M_pop_t0)*100/M_pop_t0
+            if (sum(M_temp) > sum(M)){
+                col_change <- "blue"
+            }else{
+                col_change <- "red"
+            }
+            M_pop[nrow(M_pop)+1,] <- c(rel_pop,i,0)
             M <- M_temp
-            #check relative population  and store to vector
-            rel_pop <- sum(M_temp)*100/(n*m)
-            M_pop[nrow(M_pop)+1,] <- c(rel_pop,i)
             #check if mass extinction has occured
             if(rel_pop ==0){
                 M_all <- M_all[,,1:i]
                 break
             }
+            
             
         }
         
@@ -148,13 +161,13 @@ function(input, output, session) {
                                     mode = 'lines', 
                                     line = list(
                                         simplyfy = TRUE, 
-                                        color="white"))  %>%
+                                        color= ~Colour))  %>%
                             layout(
                                 paper_bgcolor = "gray", 
                                 plot_bgcolor = "gray", 
                                 yaxis = list(
                                         title = list(
-                                                text ="Relative Population / %",
+                                                text ="Relative Population Change/ %",
                                                 font= list(color ="white")), 
                                         tickfont = list(
                                                 color = "white"),
