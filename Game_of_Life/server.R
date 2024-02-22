@@ -5,7 +5,7 @@ function(input, output, session) {
      input$habitat_size 
       })
     frame_tot <- eventReactive(input$run, {
-        input$iterations
+        input$generations
     })
     prob_life <-  eventReactive(input$run, {
         input$prob_life
@@ -30,7 +30,7 @@ function(input, output, session) {
         # define 'habitat' size
         # number of rows given by n
         n <- n()
-        # number of columns is a arbitary fixed ratio of the rows, this makes plotting easier
+        # number of columns is a arbitrary fixed ratio of the rows, this makes plotting easier
         m <- as.integer(1.25*n())
         # define evolution iterations
         frame_tot <- frame_tot()
@@ -44,7 +44,7 @@ function(input, output, session) {
         # create 3D matrix to store animation frames
         M_all<-array(M, dim = c(dim(M),frame_tot))
         # create data frame to store population stats
-        M_pop <- data.frame(Rel_pop = double(), Iteration = integer())
+        M_pop <- data.frame(Rel_pop = double(), Generation = integer())
         # calculate initial population
         M_pop_t0 <- sum(M)
         
@@ -92,10 +92,10 @@ function(input, output, session) {
         
         # melt 3D matrix to a dataframe to allow plotting with plotly
         M_all_df <-  melt(M_all)
-        colnames(M_all_df) <- c('X', 'Y', 'Iteration', 'Z')
+        colnames(M_all_df) <- c('X', 'Y', 'Generation', 'Z')
         # accumulate data to allow trace line graph of relative population changes to be created
-        M_pop <- lapply(seq_along(M_pop$Iteration), function(x) {
-            cbind(M_pop[M_pop$Iteration %in% M_pop$Iteration[seq(1, x)], ], frame = M_pop$Iteration[[x]])})
+        M_pop <- lapply(seq_along(M_pop$Generation), function(x) {
+            cbind(M_pop[M_pop$Generation %in% M_pop$Generation[seq(1, x)], ], frame = M_pop$Generation[[x]])})
         M_pop <- bind_rows(M_pop)
         # here the relative population changes are plotted to plot2 in the ui
         output$plot1 <- renderPlotly({
@@ -113,7 +113,7 @@ function(input, output, session) {
                                         x =~X, 
                                         y=~Y, 
                                         z = ~Z, 
-                                        frame = ~Iteration, 
+                                        frame = ~Generation, 
                                         type = "heatmap", 
                                         showscale = FALSE) %>%
                                     layout(
@@ -127,7 +127,7 @@ function(input, output, session) {
                                     onRender("function(el,x) {Plotly.animate(el);}") %>% 
                                     animation_slider(
                                     currentvalue = list(
-                                                        prefix = "Iteration ", 
+                                                        prefix = "Generation ", 
                                                         color = "white"), 
                                                         font = list(
                                                             color="white"), 
@@ -140,7 +140,7 @@ function(input, output, session) {
         output$plot2 <- renderPlotly({
                             fig2 <- M_pop %>% 
                                     plot_ly(
-                                            x=~Iteration, 
+                                            x=~Generation, 
                                             y=~Rel_pop,
                                             frame = ~frame, 
                                             type = 'scatter', 
@@ -162,7 +162,7 @@ function(input, output, session) {
                                                 gridcolor = "white"), 
                                         xaxis = list(
                                                 title = list(
-                                                        text ="Life Cycle Iteration", 
+                                                        text ="Life Cycle Generation", 
                                                         font= list(color="white")), 
                                                 tickfont = list(
                                                         color = "white"),
@@ -174,7 +174,7 @@ function(input, output, session) {
                                     onRender("function(el,x) {Plotly.animate(el);}") %>%
                                     animation_slider(
                                         currentvalue = list(
-                                            prefix = "Iteration ", 
+                                            prefix = "Generation ", 
                                             color = "white"), 
                                         font = list(
                                             color="white"), 
