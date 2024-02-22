@@ -57,8 +57,8 @@ parameters in the control panel have been selected the simulation can be
 run by pressing the ‘Start’ button.
 <figure>
 <img
-src="https://github.com/XCStat99/Game-of-Life/assets/120208086/975524c6-6707-4974-8b40-df1cfd6a6c84">
-</figure>{:height="120px" width="120px"}
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/ab0ad843-d565-411f-8bd6-1dc4a6fc1fa3">
+</figure>
 Once ‘Start’ is pressed all generations (iterations) will be calculated
 and then displayed in the Plotly plot (highlighted in red below). This
 may take some time for large habitats over a large number of
