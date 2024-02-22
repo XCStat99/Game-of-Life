@@ -28,10 +28,8 @@ generations (iterations) can be adjusted. Also adjustable is the
 ‘Probability of starting life’, this corresponds to p in the binomial
 distribution which is used for randomly assigning the starting state.
 
-<figure>
-<img src="//assets//Game.png" alt="Game of Life" />
-<figcaption aria-hidden="true">Game of Life</figcaption>
-</figure>
+<img width="1114" alt="Game" src="https://github.com/XCStat99/Game-of-Life/assets/120208086/50d6b0df-cef7-4119-9da5-559106b1b08e">
+
 
 It is also possible to adjust the rules of the Game of Life by adjusting
 the text entry boxes, the default values being set to the original of
