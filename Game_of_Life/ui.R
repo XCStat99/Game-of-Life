@@ -27,7 +27,7 @@ fluidPage(
                                        max = 80,
                                        value = 50),
                             # create slider for defining the number of generations
-                           sliderInput("iterations",
+                           sliderInput("generations",
                                        "Number of generations",
                                        min = 2,
                                        max = 100,
@@ -73,7 +73,7 @@ fluidPage(
                             of the habitat, rewind and pause generations. Allowing the birth and death of different patterns to be observed. "),
                             p("More details can be found ", a("here", href = "https://github.com/XCStat99/Game-of-Life"))
                     )
-            )
+             )
    
         )
 )
