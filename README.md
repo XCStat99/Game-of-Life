@@ -32,9 +32,7 @@ the starting state.
 
 <figure>
 <img
-src="https://github.com/XCStat99/Game-of-Life/assets/120208086/15c5bb52-8251-4d48-a1a1-8dee3192a6ec"
-alt="Control Panel" />
-<figcaption aria-hidden="true">Control Panel</figcaption>
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/15c5bb52-8251-4d48-a1a1-8dee3192a6ec">
 </figure>
 
 It is also possible to adjust the rules of the Game of Life by adjusting
