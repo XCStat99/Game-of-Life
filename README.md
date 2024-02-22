@@ -79,9 +79,7 @@ significant effects on the population of the habitat and its stability.
 
 <figure>
 <img
-src="https://github.com/XCStat99/Game-of-Life/assets/120208086/db04ce9e-bf12-46ea-b4c7-67b2891f83a3"
-alt="Pop Panel" />
-<figcaption aria-hidden="true">Pop Panel</figcaption>
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/db04ce9e-bf12-46ea-b4c7-67b2891f83a3">
 </figure>
 
 Occasionally complete extinction will occur, especially if the rules are
