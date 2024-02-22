@@ -58,7 +58,7 @@ run by pressing the ‘Start’ button.
 <figure>
 <img
 src="https://github.com/XCStat99/Game-of-Life/assets/120208086/975524c6-6707-4974-8b40-df1cfd6a6c84">
-</figure>
+</figure>{:height="120px" width="120px"}
 Once ‘Start’ is pressed all generations (iterations) will be calculated
 and then displayed in the Plotly plot (highlighted in red below). This
 may take some time for large habitats over a large number of
