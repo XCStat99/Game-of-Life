@@ -1,6 +1,6 @@
 README
 ================
-2024-02-13
+2024-02-22
 
 ## Introduction
 
@@ -30,7 +30,12 @@ Also adjustable is the ‘Probability of starting life’, this corresponds
 to p in the binomial distribution which is used for randomly assigning
 the starting state.
 
-<img width="1114" alt="Game" src="https://github.com/XCStat99/Game-of-Life/assets/120208086/50d6b0df-cef7-4119-9da5-559106b1b08e">
+<figure>
+<img
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/15c5bb52-8251-4d48-a1a1-8dee3192a6ec"
+alt="Control Panel" />
+<figcaption aria-hidden="true">Control Panel</figcaption>
+</figure>
 
 It is also possible to adjust the rules of the Game of Life by adjusting
 the text entry boxes, the default values being set to the original of
@@ -52,6 +57,7 @@ Adjusting these leads to interesting scenarios and helps to explain why
 the rules in Conway’s Game of Life described above were chosen. Once the
 parameters in the control panel have been selected the simulation can be
 run by pressing the ‘Start’ button.
+!(<https://github.com/XCStat99/Game-of-Life/assets/120208086/6996e85a-19fd-4305-b13a-2e6d421a14c8>)
 
 Once ‘Start’ is pressed all generations (iterations) will be calculated
 and then displayed in the Plotly plot (highlighted in red below). This
@@ -59,12 +65,26 @@ may take some time for large habitats over a large number of
 generations. This does lead to some limitations in performance as
 outlined in the Performance Considerations section below.
 
+<figure>
+<img
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/f3bc6eae-09ee-455f-918e-a65e6f9c119e"
+alt="Life Panel" />
+<figcaption aria-hidden="true">Life Panel</figcaption>
+</figure>
+
 Also generated is data on the population changes during the game this is
 shown in the line plot in the population panel (highlighted in red
 below). This calculates the population change for each generation
 relative to the original starting population and it is interesting to
 observe how changes in the rules of the game can be observed to have
 significant effects on the population of the habitat and its stability.
+
+<figure>
+<img
+src="https://github.com/XCStat99/Game-of-Life/assets/120208086/db04ce9e-bf12-46ea-b4c7-67b2891f83a3"
+alt="Pop Panel" />
+<figcaption aria-hidden="true">Pop Panel</figcaption>
+</figure>
 
 Occasionally complete extinction will occur, especially if the rules are
 changed, at this point the game will end and the output life cycle plot
