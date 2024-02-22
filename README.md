@@ -54,8 +54,7 @@ live cell, as if by reproduction.*
 Adjusting these leads to interesting scenarios and helps to explain why
 the rules in Conway’s Game of Life described above were chosen. Once the
 parameters in the control panel have been selected the simulation can be
-run by pressing the ‘Start’ button.
-!(<https://github.com/XCStat99/Game-of-Life/assets/120208086/6996e85a-19fd-4305-b13a-2e6d421a14c8>)
+run by pressing the ‘Start’ button.\[\](<https://github.com/XCStat99/Game-of-Life/assets/120208086/6996e85a-19fd-4305-b13a-2e6d421a14c8>?display=inline-block)
 
 Once ‘Start’ is pressed all generations (iterations) will be calculated
 and then displayed in the Plotly plot (highlighted in red below). This
