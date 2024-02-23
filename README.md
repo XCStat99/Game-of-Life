@@ -25,7 +25,7 @@ found here: <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>
 ## Control
 
 Using the side panel (highlighted in red below) the size of the
-‘habitat’ and the number of generations (iterations) can be adjusted.
+‘habitat’ and the number of generations can be adjusted.
 Also adjustable is the ‘Probability of starting life’, this corresponds
 to p in the binomial distribution which is used for randomly assigning
 the starting state.
@@ -56,7 +56,7 @@ the rules in Conway’s Game of Life described above were chosen. Once the
 parameters in the control panel have been selected the simulation can be
 run by pressing the ‘Start’ button.
 
-Once ‘Start’ is pressed all generations (iterations) will be calculated
+Once ‘Start’ is pressed all generations will be calculated
 and then displayed in the Plotly plot (highlighted in red below). This
 may take some time for large habitats over a large number of
 generations. This does lead to some limitations in performance as
